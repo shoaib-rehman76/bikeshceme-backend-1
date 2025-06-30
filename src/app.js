@@ -52,26 +52,7 @@ app.use(mongoSanitize());
 app.use(cors());
 app.options("*", cors());
 
-app.set('view engine', 'ejs');
-// Tell Express where your EJS files (views) are located
-app.set('views', path.join(__dirname, 'views'));
-app.use(express.static(path.join(__dirname, '..', 'public')));
 
-app.get('/', (req, res) => {
-    // This will look for 'index.ejs' inside your 'views' folder
-    // You can pass data to your template as an object
-    res.render('index', { pageTitle: 'Bikesceeme', message: '' });
-});
-
-app.get('/about', (req, res) => {
-  res.render('about'); // about.ejs should be in your /views folder
-});
-
-
-
-app.get('/services', (req, res) => {
-  res.render('services'); // about.ejs should be in your /views folder
-});
 
 // jwt authentication
 // JWT authentication
