@@ -34,7 +34,9 @@ const login = catchAsync(async (req, res) => {
 
 const logout = catchAsync(async (req, res) => {
   await authService.logout(req.body.refreshToken);
-  res.status(httpStatus.NO_CONTENT).send();
+  res.status(httpStatus.OK).send({
+    message:"successfully logout"
+  });
 });
 
 const verifyOTP = async (req, res) => {

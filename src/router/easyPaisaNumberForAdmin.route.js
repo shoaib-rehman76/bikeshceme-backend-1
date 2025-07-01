@@ -24,7 +24,6 @@ register_route({
   route: "/add",
   auth_enable: true,
   admin_auth_enable: true,
-  services_provider_admin_auth_enable: true,
   post_method: easyPaisaNumberForAdminController.createOne,
 });
 
