@@ -49,4 +49,12 @@ register_route({
   delete_method: userController.deleteUsers,
 });
 
+
+
+register_route({
+  router,
+  route: "/get/me", // This will also conflict with the above PATCH route
+  auth_enable: true,
+  get_method: userController.getMe,
+});
 module.exports = router;

@@ -71,7 +71,7 @@ const userSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    country: {
+    city: {
       type: String,
     },
     address: {

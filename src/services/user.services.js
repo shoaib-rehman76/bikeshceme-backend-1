@@ -26,6 +26,11 @@ const CreateUser = async (body) => {
   return user;
 };
 
+const getMes = async (userId) => {
+  const user = await getUserById(userId);
+  return user;
+};
+
 // Get user by ID
 const queryUsers = async (filter, options) => {
   const users = await User.paginate(filter, options);
@@ -151,4 +156,5 @@ module.exports = {
   clearOTP,
   isEmailTaken,
   allUser,
+  getMes,
 };
