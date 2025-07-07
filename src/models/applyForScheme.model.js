@@ -7,7 +7,7 @@ const applyForSchemeSchema = new mongoose.Schema(
       ref: "users",
       required: true,
     },
-    easyPaisaTrd: {
+    transactionId: {
       type: String,
       required: true,
       unique:true
@@ -21,18 +21,15 @@ const applyForSchemeSchema = new mongoose.Schema(
       enum: ["pending", "approved", "rejected"],
       default: "pending",
     },
-address:{
-  type:String,
-  required:true
-},
-phoneNumber:{
-  type:String,
-  required:true
-},
-userName:{
-  type:String,
-  required:true
-},
+
+    phoneNumber: {
+      type: String,
+      required: true
+    },
+    userName: {
+      type: String,
+      required: true
+    },
 
 userEmail:{
   type:String,
@@ -40,12 +37,47 @@ userEmail:{
 },
 
 
-
-
-whatssapp:{
-  type:String,
-  required:true
+ fullName: {
+  type: String,
+  required: true
 },
+    cnic: {
+  type: String,
+  required: true
+},
+    phone: {
+  type: String,
+  required: true
+},
+    email: {
+  type: String,
+  required: true
+},
+    address: {
+  type: String,
+  required: true
+},
+    city: {
+  type: String,
+  required: true
+},
+    paymentMethod: {
+      type: String,
+      required: true
+    },
+    paymentNumber: {
+      type: String,
+      required: true
+    },
+
+  
+    paymentScreenshot: {
+      type: String,
+      required: true
+    },
+ 
+
+  
     approvedAt: {
       type: Date,
     },

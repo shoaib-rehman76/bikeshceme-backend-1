@@ -7,6 +7,9 @@ const giftService = require("./gift.service");
 const ApplyForSchemeService = require("./applyForScheme.service");
 const easyPaisaNumberForAdminService = require("./easyPaisaNumberForAdmin.service");
 const walletService = require("./walletService");
+const referralPointFormulaService = require("./referrel_point_formula.service");
+const referralHistoryService = require("./referralHistory.service");
+const currentPointService = require("./currentpoint.service");
 
 module.exports = {
   authService,
@@ -18,4 +21,7 @@ module.exports = {
   ApplyForSchemeService,
   easyPaisaNumberForAdminService,
   walletService,
+  referralPointFormulaService,
+  referralHistoryService,
+  currentPointService
 };

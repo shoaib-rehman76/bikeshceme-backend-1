@@ -143,6 +143,16 @@ const allUser = async () => {
     totalUser,
   };
 };
+
+
+  const findByReferralCode = async (referralCode) => {
+    const singleuser = await User.findOne({referralCode})
+  
+    if (!singleuser) {
+      throw new ApiError(404, `No document found with that referralCode : ${referralCode}`);
+    }
+    return singleuser;
+  }
 module.exports = {
   CreateUser,
   queryUsers,
@@ -157,4 +167,5 @@ module.exports = {
   isEmailTaken,
   allUser,
   getMes,
+  findByReferralCode
 };

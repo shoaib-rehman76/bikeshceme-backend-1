@@ -50,6 +50,8 @@ const getMulterStorage = () => {
 // Function to handle single image upload using Multer
 const uploadFile = () => multer({ storage: getMulterStorage() }).single("image"); // Handle single image
 
+
+const uploadEasyPaiseFile = () => multer({ storage: getMulterStorage() }).single("paymentScreenshot");
 // Function to save the uploaded image locally and return the image URL
 const saveImage = async (req, res, next) => {
   try {
@@ -77,4 +79,5 @@ const saveImage = async (req, res, next) => {
 module.exports = {
   uploadFile,
   saveImage,
+  uploadEasyPaiseFile
 };

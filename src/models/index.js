@@ -6,3 +6,6 @@ module.exports.EasyPaisaNumberForAdminModel = require("./easyPaisaNumberForAdmin
 module.exports.ApplyForSchemeModel = require("./applyForScheme.model");
 module.exports.walletModel = require("./wallet.model");
 module.exports.giftModel = require("./gift.model");
+module.exports.referralPointsModel = require("./referrel_formula.model");
+module.exports.referralHistoryModel = require("./referralHistory.model");
+module.exports.currentPointModel = require("./currentPoint.model");

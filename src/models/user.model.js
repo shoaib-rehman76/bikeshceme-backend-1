@@ -78,7 +78,22 @@ const userSchema = mongoose.Schema(
       type: String,
       default: "",
     },
+      isReferrel: {
+    type: Boolean,
   },
+    referrerId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "users",
+    default: null
+
+  },
+
+    referralCode: {
+    type: String,
+    default: ''
+  },
+  },
+
   {
     timestamps: true,
   }

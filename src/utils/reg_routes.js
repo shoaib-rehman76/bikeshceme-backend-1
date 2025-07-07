@@ -1,6 +1,6 @@
 const { WRONG_HTTP_METHOD } = require("../utils/error_codes");
 const { protect, restrictTo } = require("../middlewares/authRole");
-const {uploadFile,saveImage} =require('../middlewares/fileUploader')
+const {uploadFile,saveImage,uploadEasyPaiseFile} =require('../middlewares/fileUploader')
 const register_route = ({
   router,
   route,
@@ -11,6 +11,7 @@ const register_route = ({
   services_provider_admin_auth_enable = false,
   validate = false,
   fileUploader = false,
+  fileUploaderForEasyPaise = false,
   get_method,
   post_method,
   patch_method,
@@ -32,6 +33,8 @@ const register_route = ({
   }
 if(fileUploader){
   args.push(uploadFile(),saveImage)
+}if(fileUploaderForEasyPaise){
+  args.push(uploadEasyPaiseFile(),saveImage)
 }
   // Register GET method if defined
   if (get_method) {

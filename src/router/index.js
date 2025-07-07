@@ -5,7 +5,10 @@ const productRouter = require("./product.route");
 const giftRouter = require("./gift.route");
 const easyPaisaNumberForAdminRouter = require("./easyPaisaNumberForAdmin.route");
 const ApplyForSchemeRouter = require("./ApplyForScheme.route");
+const referralPointFormula = require("./referralPointFormula.route");
 const walletRouter = require("./wallet.route");
+const referralhistoryRoute = require("./referralHistory.route");
+const currentPointRoute = require("./currentPoint.route");
 
 const router = express.Router();
 const defaultRoutes = [
@@ -39,6 +42,18 @@ const defaultRoutes = [
   {
     path: "/wallet",
     route: walletRouter,
+  },
+  {
+    path: "/referralPointFormula",
+    route: referralPointFormula,
+  },
+  {
+    path: "/referralHistory",
+    route: referralhistoryRoute,
+  },
+  {
+    path: "/currentPoint",
+    route: currentPointRoute,
   },
 ];
 

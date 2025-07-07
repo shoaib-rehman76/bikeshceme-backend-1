@@ -7,6 +7,8 @@ const {
   userService,
   emailService,
   tokenService,
+  currentPointService,
+  referralPointFormulaService,
 } = require("../services");
 const { ApiError } = require("../utils");
 const User = require("../models/user.model"); // Assuming User is your Mongoose model
@@ -17,7 +19,26 @@ const register = catchAsync(async (req, res, next) => {
   const users = await userServices.CreateUser(req.body);
   const token = await generateAuthTokens(users);
   await emailService.sendOTPEmail(req, res, users);
+  if(req.body.referralCode){
+    const referralUser = await userService.findByReferralCode(req.body.referralCode);
+    if(!referralUser){
+      throw new ApiError(httpStatus.NOT_FOUND, "Referral code not found");
+    }
+if(referralUser){
+      users.referralCode = referralUser.referralCode;
+      users.referrerId = referralUser._id;
 
+      users.isReferral = true;
+      await users.save();
+      const referralPointFormula = await referralPointFormulaService.getByType("referral");
+  currentPointService.Create({
+   userId: users._id,
+   currentPoint: referralPointFormula.earnPoint,
+   equivalenceRupees: referralPointFormula.equivalenceRupees,
+   isActive: true,
+ }, { timestamps: true });
+    }
+  }
   res.send({ token, users });
   setTimeout(() => {
     userServices.clearOTP(users._id);
