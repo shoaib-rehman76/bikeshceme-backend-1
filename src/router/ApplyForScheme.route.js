@@ -16,7 +16,7 @@ register_route({
   auth_enable: true,
   get_method: ApplyForSchemeController.getOne,
 });
-
+// add 
 register_route({
   router,
   route: "/add",
