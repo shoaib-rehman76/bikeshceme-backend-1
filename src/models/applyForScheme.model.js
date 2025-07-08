@@ -73,7 +73,7 @@ userEmail:{
   
     paymentScreenshot: {
       type: String,
-      required: true
+     
     },
  
 

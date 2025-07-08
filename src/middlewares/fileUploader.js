@@ -66,7 +66,7 @@ const saveImage = async (req, res, next) => {
     const filePath = `public/images/${folderNames.join("-")}/${file.filename}`; // Path for local image storage
     const imageUrl = `${req.protocol}://${req.get("host")}/${filePath}`; // Get image URL
 
-    req.body.image = imageUrl; // Set the image URL in req.body
+    req.body.paymentScreenshot = imageUrl; // Set the image URL in req.body
 
     // Pass req.body to the next middleware or route handler
     return next();
