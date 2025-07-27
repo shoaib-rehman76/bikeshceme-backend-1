@@ -5,13 +5,14 @@ const { ApiResponse } = require("../utils");
 
 const getUsers = catchAsync(async (req, res, next) => {
   const { page, limit, ...query } = req.query;
-  const filter = query;
-  const data = await userServices.queryUsers(filter, { page, limit });
+  const filter = { ...query };
+
+  const data = await userServices.queryUsers(filter, req, { page, limit });
   ApiResponse.successResponse(res, data);
 });
 
 const deleteUsers = catchAsync(async (req, res, next) => {
-  const user = await userServices.deleteUser(req.params.id);
+  const user = await userServices.deleteUserById(req.params.id);
   res.status(httpStatus.OK).json(user);
 });
 
@@ -31,12 +32,19 @@ const getAllUsers = catchAsync(async (req, res, next) => {
 });
 
 const updateUser = catchAsync(async (req, res, next) => {
-  const user = await userServices.updateUser(req.params.id, req.body);
+  const user = await userServices.updateUserById(req.params.id, req.body);
   res.status(httpStatus.OK).json(user);
 });
 const getMe = catchAsync(async (req, res, next) => {
   const user = await userServices.getMes(req.user.id);
   res.status(httpStatus.OK).json(user);
+});
+const getUserByRefralCode = catchAsync(async (req, res, next) => {
+  const { page, limit, ...query } = req.query;
+  const { referralCode } = req.user;
+  const filter = query;
+  const data = await userServices.queryUsers(referralCode, { page, limit });
+  ApiResponse.successResponse(res, data);
 });
 module.exports = {
   getUsers,
@@ -45,5 +53,6 @@ module.exports = {
   getUser,
   updateUser,
   getAllUsers,
-  getMe
+  getMe,
+  getUserByRefralCode,
 };

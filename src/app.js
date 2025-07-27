@@ -52,8 +52,6 @@ app.use(mongoSanitize());
 app.use(cors());
 app.options("*", cors());
 
-
-
 // jwt authentication
 // JWT authentication
 app.use(passport.initialize());

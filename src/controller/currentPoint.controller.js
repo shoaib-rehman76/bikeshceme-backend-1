@@ -4,9 +4,9 @@ const catchAsync = require("../utils/catchAsync");
 const { ApiResponse } = require("../utils");
 
 const getAlls = catchAsync(async (req, res, next) => {
-  const { page, limit, ...query } = req.query;
+  const { page, limit,populate, ...query } = req.query;
   const filter = query;
-  const data = await currentPointService.FromQuery(filter, { page, limit });
+  const data = await currentPointService.FromQuery(filter, { page, limit ,populate});
   ApiResponse.successResponse(res, data);
 });
 

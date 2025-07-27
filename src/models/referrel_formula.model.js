@@ -6,7 +6,9 @@ const { Schema } = mongoose;
 
 const referral_points_formula = new Schema({
   type: {
-    type: String, // Type of referral point formula (e.g., 'referral', 'reward')
+    type: String,
+    enum: ['referral', 'reward'],
+    required: true,
   },
   earnPoint: {  // Points earned by the user for referring 4point == 1rupee
     type: Number,

@@ -32,7 +32,13 @@ const getMes = async (userId) => {
 };
 
 // Get user by ID
-const queryUsers = async (filter, options) => {
+const queryUsers = async (filter, req, options) => {
+  const user = req.user;
+  if (user?.role === "user") {
+    // Only allow users whose referralId matches current user's _id
+    filter.referralCode = user.referralCode;
+  }
+
   const users = await User.paginate(filter, options);
   return users;
 };
@@ -58,12 +64,12 @@ const updateUserById = async (userId, updateBody) => {
   }
 
   // Check if the email is being updated and is already taken
-  if (updateBody.email === user.email) {
-    throw new ApiError(
-      httpStatus.BAD_REQUEST,
-      "Email is already taken. Please try a different one."
-    );
-  }
+  // if (updateBody.email === user.email) {
+  //   throw new ApiError(
+  //     httpStatus.BAD_REQUEST,
+  //     "Email is already taken. Please try a different one."
+  //   );
+  // }
 
   // Update the user with the new data
   Object.assign(user, updateBody);
@@ -144,15 +150,17 @@ const allUser = async () => {
   };
 };
 
+const findByReferralCode = async (referralCode) => {
+  const singleuser = await User.findOne({ referralCode });
 
-  const findByReferralCode = async (referralCode) => {
-    const singleuser = await User.findOne({referralCode})
-  
-    if (!singleuser) {
-      throw new ApiError(404, `No document found with that referralCode : ${referralCode}`);
-    }
-    return singleuser;
+  if (!singleuser) {
+    throw new ApiError(
+      404,
+      `No document found with that referralCode : ${referralCode}`
+    );
   }
+  return singleuser;
+};
 module.exports = {
   CreateUser,
   queryUsers,
@@ -167,5 +175,5 @@ module.exports = {
   isEmailTaken,
   allUser,
   getMes,
-  findByReferralCode
+  findByReferralCode,
 };

@@ -1,23 +1,21 @@
 const httpStatus = require("http-status");
 const ApiError = require("../utils/ApiError");
-const {  currentPointModel} = require("../models");
+const { currentPointModel } = require("../models");
 
 const Create = async (body) => {
-  const data = await currentPointModel.create(body);
-  return data;
+  return await currentPointModel.create(body);
 };
 
 const getById = async (id) => {
   const data = await currentPointModel.findById(id);
   if (!data) {
-    throw new ApiError(httpStatus.NOT_FOUND, "No document found with that Id");
+    throw new ApiError(httpStatus.NOT_FOUND, "No document found with that ID");
   }
   return data;
 };
 
 const FromQuery = async (filter, option) => {
-  const result = await currentPointModel.paginate(filter, option);
-  return result;
+  return await currentPointModel.paginate(filter, option);
 };
 
 const deleteById = async (id) => {
@@ -28,11 +26,15 @@ const deleteById = async (id) => {
   return "Data successfully deleted";
 };
 
+// ✅ FIXED: Returns a single Mongoose document, not array or string
+const findByUserId = async (userId) => {
+  const result = await currentPointModel.findOne({ userId }); // ✅ only one document
+  return result; // may return null, handle in controller
+};
+
 const updateById = async (id, body) => {
   const data = await getById(id);
-
   Object.assign(data, body);
-
   await data.save();
   return data;
 };
@@ -43,4 +45,5 @@ module.exports = {
   deleteById,
   updateById,
   FromQuery,
+  findByUserId, // ✅ now returns a single document
 };

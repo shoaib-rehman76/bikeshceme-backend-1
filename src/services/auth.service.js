@@ -9,13 +9,14 @@ const { Token } = require("../models");
 
 const userServices = require("./user.services"); // Correct the import path if necessary
 
-// Use the imported isEmailTaken function
+
 const loginUserWithEmailAndPassword = async (email, password) => {
   const user = await userService.getUserByEmail(email);
   if (!user) {
-    throw new ApiError(httpStatus.NOT_FOUND, "incorrect Email ");
+    throw new ApiError(httpStatus.NOT_FOUND, "Incorrect email");
   }
-  const isMatch = await bcrypt.compare(password, user.password);
+
+  const isMatch = await user.isPasswordMatch(password);
   if (!isMatch) {
     throw new ApiError(httpStatus.UNAUTHORIZED, "Incorrect password");
   }
@@ -26,14 +27,17 @@ const loginUserWithEmailAndPassword = async (email, password) => {
       "Please verify your email before logging into your account"
     );
   }
+
   if (user.isBlock) {
     throw new ApiError(
       httpStatus.UNAUTHORIZED,
-      "Your account is blocked. Please contact support for assistance."
+      "Your account is blocked. Please contact support."
     );
   }
-  return user; // Return the user if the password matches
+
+  return user;
 };
+
 
 const logout = async (refreshToken) => {
   const tokenDoc = await Token.findOne({

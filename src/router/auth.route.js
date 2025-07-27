@@ -57,5 +57,12 @@ register_route({
   route: "/regenerate-otp",
   post_method: authController.regenerateOTP,
 });
+register_route({
+  router,
+  route: "/change-password",
+  auth_enable: true,
+  post_method: authController.changePassword,
+});
+
 
 module.exports = router;

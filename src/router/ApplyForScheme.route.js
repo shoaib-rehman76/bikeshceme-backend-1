@@ -12,6 +12,13 @@ register_route({
 
 register_route({
   router,
+  route: "/random-winner",
+  auth_enable: true,
+  get_method: ApplyForSchemeController.getRandomWinner,
+});
+
+register_route({
+  router,
   route: "/:id",
   auth_enable: true,
   get_method: ApplyForSchemeController.getOne,

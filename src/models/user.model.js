@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
-const bcrypt = require("bcryptjs");
+const crypto = require('crypto'); 
+const bcrypt= require('bcrypt');
 const { toJSON, paginate } = require("./plugins");
 const roles = require("../config/role");
 const userSchema = mongoose.Schema(
@@ -51,7 +52,7 @@ const userSchema = mongoose.Schema(
       type: String,
       enum: [roles.ADMIN, roles.USER],
       default: "user",
-      private: true,
+      
     },
     isEmailVerified: {
       type: Boolean,
@@ -112,14 +113,34 @@ userSchema.methods.isPasswordMatch = async function (password) {
   return bcrypt.compare(password, user.password);
 };
 
+// userSchema.pre("save", async function (next) {
+//   const user = this;
+//   if (user.isModified("password")) {
+//     user.password = await bcrypt.hash(user.password, 8);
+//   }
+//   next();
+// });
 userSchema.pre("save", async function (next) {
   const user = this;
-  if (user.isModified("password")) {
-    user.password = await bcrypt.hash(user.password, 8);
+  // Generate unique referral code if not already set
+  if (!user.referralCode) {
+    const randomCode = crypto.randomBytes(4).toString("hex"); // generates like "a1b2c3d4"
+    user.referralCode = randomCode.toUpperCase();
+  }
+
+  next();
+});
+
+userSchema.pre("save", async function (next) {
+  if (this.isModified("password")) {
+    this.password = await bcrypt.hash(this.password, 8); // ✅ hash only once here
   }
   next();
 });
 
+userSchema.methods.isPasswordMatch = async function (password) {
+  return bcrypt.compare(password, this.password); // ✅ compare correctly
+};
 const User = mongoose.model("users", userSchema);
 
 module.exports = User;

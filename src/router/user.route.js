@@ -6,16 +6,16 @@ const router = Router();
 register_route({
   router,
   route: "/all",
-  auth_enable: false,
-  admin_auth_enable: false,
+  auth_enable: true,
+  // admin_auth_enable: false,
   get_method: userController.getUsers,
 });
 
 register_route({
   router,
   route: "/all-user",
-  auth_enable: false,
-  admin_auth_enable: false,
+  auth_enable: true,
+  admin_auth_enable: true,
   get_method: userController.getAllUsers,
 });
 register_route({

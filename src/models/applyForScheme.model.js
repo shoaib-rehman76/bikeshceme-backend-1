@@ -22,19 +22,19 @@ const applyForSchemeSchema = new mongoose.Schema(
       default: "pending",
     },
 
-    phoneNumber: {
-      type: String,
-      required: true
-    },
-    userName: {
-      type: String,
-      required: true
-    },
+//     phoneNumber: {
+//       type: String,
+//       required: true
+//     },
+//     userName: {
+//       type: String,
+//       required: true
+//     },
 
-userEmail:{
-  type:String,
-  required:true
-},
+// userEmail:{
+//   type:String,
+//   required:true
+// },
 
 
  fullName: {
@@ -76,8 +76,14 @@ userEmail:{
      
     },
  
-
-  
+IsWinner: {
+      type: Boolean,
+      default: false,
+    },
+  isCompleted: {
+      type: Boolean,
+      default: false,
+    },
     approvedAt: {
       type: Date,
     },
