@@ -84,6 +84,10 @@ IsWinner: {
       type: Boolean,
       default: false,
     },
+    isLoser:{
+      type:Boolean,
+      default:false
+    },
     approvedAt: {
       type: Date,
     },

@@ -16,8 +16,56 @@ const getAlls = catchAsync(async (req, res, next) => {
   ApiResponse.successResponse(res, data);
 });
 
+// const getRandomWinner = catchAsync(async (req, res, next) => {
+//   // 1. Count all uncompleted entries
+//   const count = await ApplyForSchemeModel.countDocuments({
+//     isCompleted: false,
+//     status: "approved",
+//   });
+
+//   if (count === 0) {
+//     return ApiResponse.notFoundResponse(res, "No uncompleted entries found.");
+//   }
+
+//   // 2. Pick a random index
+//   const randomIndex = Math.floor(Math.random() * count);
+
+//   // 3. Get the random entry using skip
+//   const randomEntry = await ApplyForSchemeModel.findOne({ isCompleted: false })
+//     .skip(randomIndex)
+//     .populate("userId")
+//     .populate("productId");
+
+//   if (!randomEntry) {
+//     return ApiResponse.notFoundResponse(res, "Failed to select random entry.");
+//   }
+
+//   // 4. Set all IsWinner = false (reset)
+//   await ApplyForSchemeModel.updateMany({}, { isCompleted: true });
+
+//   // 5. Mark selected entry as winner and completed
+//   randomEntry.IsWinner = true;
+//   randomEntry.isCompleted = true;
+//   await randomEntry.save();
+
+//   // 6. Return the winner
+//   ApiResponse.successResponse(res, randomEntry);
+// });
+
+// 7. Send response
 const getRandomWinner = catchAsync(async (req, res, next) => {
-  // 1. Count all uncompleted entries
+  // 1. Fetch winner and loser products
+  const winnerProduct = await ProductModel.findOne({ isWinner: true });
+  const loserProduct = await ProductModel.findOne({ isLoser: true });
+
+  if (!winnerProduct || !loserProduct) {
+    return ApiResponse.notFoundResponse(
+      res,
+      "Winner or loser product is not defined in products collection."
+    );
+  }
+
+  // 2. Count all approved + not completed entries
   const count = await ApplyForSchemeModel.countDocuments({
     isCompleted: false,
     status: "approved",
@@ -27,32 +75,49 @@ const getRandomWinner = catchAsync(async (req, res, next) => {
     return ApiResponse.notFoundResponse(res, "No uncompleted entries found.");
   }
 
-  // 2. Pick a random index
+  // 3. Pick a random index
   const randomIndex = Math.floor(Math.random() * count);
 
-  // 3. Get the random entry using skip
-  const randomEntry = await ApplyForSchemeModel.findOne({ isCompleted: false })
+  // 4. Fetch the random winner entry
+  const winnerEntry = await ApplyForSchemeModel.findOne({
+    isCompleted: false,
+    status: "approved",
+  })
     .skip(randomIndex)
-    .populate("userId")
-    .populate("productId");
+    .populate("userId");
 
-  if (!randomEntry) {
+  if (!winnerEntry) {
     return ApiResponse.notFoundResponse(res, "Failed to select random entry.");
   }
 
-  // 4. Set all IsWinner = false (reset)
-  await ApplyForSchemeModel.updateMany({}, { isCompleted: true });
+  // 5. Update all approved entries -> mark them as losers and assign loser product
+  await ApplyForSchemeModel.updateMany(
+    { status: "approved" },
+    {
+      $set: {
+        IsWinner: false,
+        isLoser: true,
+        isCompleted: true,
+        productId: loserProduct._id,
+      },
+    }
+  );
 
-  // 5. Mark selected entry as winner and completed
-  randomEntry.IsWinner = true;
-  randomEntry.isCompleted = true;
-  await randomEntry.save();
+  // 6. Update the selected winner entry -> assign winner product
+  winnerEntry.IsWinner = true;
+  winnerEntry.isLoser = false;
+  winnerEntry.isCompleted = true;
+  winnerEntry.productId = winnerProduct._id;
+  await winnerEntry.save();
 
-  // 6. Return the winner
-  ApiResponse.successResponse(res, randomEntry);
+  // 7. Send response
+  ApiResponse.successResponse(res, {
+    message: "Winner selected successfully",
+    winner: winnerEntry,
+    winnerProduct,
+    loserProduct,
+  });
 });
-
-// 7. Send response
 
 const createOne = catchAsync(async (req, res, next) => {
   const data = await ApplyForSchemeService.Create(req.body);

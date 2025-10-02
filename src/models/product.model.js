@@ -34,6 +34,14 @@ const productSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    isWinner:{
+      type:Boolean,
+      default:false
+    },
+    isLoser:{
+      type:Boolean,
+      default:false
+    },
     images: [
       {
         type: String,
