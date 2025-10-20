@@ -28,7 +28,7 @@ register_route({
   router,
   route: "/add",
   auth_enable: true,
-  fileUploaderForEasyPaise: true, // Enable file upload for EasyPaisa screenshot
+  fileUploaderForEasyPaisa: true, // Enable file upload for EasyPaisa screenshot
   post_method: ApplyForSchemeController.createOne,
 });
 
