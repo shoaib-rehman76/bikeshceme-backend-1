@@ -120,6 +120,7 @@ const getRandomWinner = catchAsync(async (req, res, next) => {
 });
 
 const createOne = catchAsync(async (req, res, next) => {
+  console.log("Request Body:", req.body); // Debug: log the request body
   const data = await ApplyForSchemeService.Create(req.body);
   ApiResponse.createSuccessResponse(res, "create ApplyForSchemeService", data);
 });
