@@ -10,83 +10,80 @@ const applyForSchemeSchema = new mongoose.Schema(
     transactionId: {
       type: String,
       required: true,
-      unique:true
+      unique: true,
     },
-    productId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "products",
-    },
+    // productId: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "products",
+    // },
     status: {
       type: String,
       enum: ["pending", "approved", "rejected"],
       default: "pending",
     },
 
-//     phoneNumber: {
-//       type: String,
-//       required: true
-//     },
-//     userName: {
-//       type: String,
-//       required: true
-//     },
+    //     phoneNumber: {
+    //       type: String,
+    //       required: true
+    //     },
+    //     userName: {
+    //       type: String,
+    //       required: true
+    //     },
 
-// userEmail:{
-//   type:String,
-//   required:true
-// },
+    // userEmail:{
+    //   type:String,
+    //   required:true
+    // },
 
-
- fullName: {
-  type: String,
-  required: true
-},
-//     cnic: {
-//   type: String,
-//   required: true
-// },
+    fullName: {
+      type: String,
+      required: true,
+    },
+    //     cnic: {
+    //   type: String,
+    //   required: true
+    // },
     phone: {
-  type: String,
-  required: true
-},
+      type: String,
+      required: true,
+    },
     email: {
-  type: String,
-  required: true
-},
+      type: String,
+      required: true,
+    },
     address: {
-  type: String,
-  required: true
-},
+      type: String,
+      required: true,
+    },
     city: {
-  type: String,
-  required: true
-},
+      type: String,
+      required: true,
+    },
     paymentMethod: {
       type: String,
-      required: true
+      required: true,
     },
     paymentNumber: {
       type: String,
-      required: true
+      required: true,
     },
 
-  
     paymentScreenshot: {
       type: String,
-     
     },
- 
-IsWinner: {
+
+    IsWinner: {
       type: Boolean,
       default: false,
     },
-  isCompleted: {
+    isCompleted: {
       type: Boolean,
       default: false,
     },
-    isLoser:{
-      type:Boolean,
-      default:false
+    isLoser: {
+      type: Boolean,
+      default: false,
     },
     approvedAt: {
       type: Date,

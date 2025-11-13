@@ -49,7 +49,14 @@ app.use(mongoSanitize());
 // app.use(compression());
 
 // enable cors
-app.use(cors());
+app.use(
+  cors({
+    origin: "*", // your frontend origins
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    credentials: true,
+  })
+);
+
 app.options("*", cors());
 
 // jwt authentication
