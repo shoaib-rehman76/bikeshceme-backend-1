@@ -2,12 +2,16 @@ const { Router } = require("express");
 const { ApplyForSchemeController } = require("../controller");
 const { register_route } = require("../utils/reg_routes");
 const router = Router();
-const {uploadFile,resizeAndSaveImage,uploadEasyPaiseFile} =require('../middlewares/fileUploader')
+const {
+  uploadFile,
+  resizeAndSaveImage,
+  uploadEasyPaiseFile,
+} = require("../middlewares/fileUploader");
 register_route({
   router,
   route: "/all",
   auth_enable: true,
-    get_method: ApplyForSchemeController.getAlls,
+  get_method: ApplyForSchemeController.getAlls,
 });
 
 register_route({
@@ -31,9 +35,12 @@ register_route({
 //   fileUploaderForEasyPaisa: true, // Enable file upload for EasyPaisa screenshot
 //   post_method: ApplyForSchemeController.createOne,
 // });
-router.post('/add',
-  uploadEasyPaiseFile(),resizeAndSaveImage,
-  ApplyForSchemeController.createOne);
+router.post(
+  "/add",
+  uploadEasyPaiseFile(),
+  resizeAndSaveImage,
+  ApplyForSchemeController.createOne
+);
 register_route({
   router,
   route: "/update/:id", // This will conflict with the GET route for `/:id`
