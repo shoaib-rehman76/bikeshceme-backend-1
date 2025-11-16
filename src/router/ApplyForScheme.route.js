@@ -37,7 +37,7 @@ register_route({
 // });
 router.post(
   "/add",
-  uploadEasyPaiseFile(),
+  uploadEasyPaiseFile,
   resizeAndSaveImage,
   ApplyForSchemeController.createOne
 );
