@@ -44,8 +44,8 @@ router.post(
 register_route({
   router,
   route: "/update/:id", // This will conflict with the GET route for `/:id`
-  auth_enable: true,
-  services_provider_admin_auth_enable: true,
+  // auth_enable: true,
+  // admin_auth_enable: true,
   patch_method: ApplyForSchemeController.updateOne,
 });
 

@@ -54,7 +54,7 @@ app.use(mongoSanitize());
 app.use(
   cors({
     origin: "*", // your frontend origins
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     credentials: true,
   })
 );

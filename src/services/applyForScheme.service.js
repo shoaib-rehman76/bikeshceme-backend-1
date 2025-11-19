@@ -29,9 +29,14 @@ const deleteById = async (id) => {
 };
 
 const updateById = async (id, body) => {
-  const data = await getById(id);
+  const data = await ApplyForSchemeModel.findByIdAndUpdate(id, body, {
+    new: true,
+    runValidators: true,
+  });
 
-  Object.assign(data, body);
+  if (!data) {
+    throw new ApiError(httpStatus.NOT_FOUND, "No document found with that ID");
+  }
 
   await data.save();
   return data;
