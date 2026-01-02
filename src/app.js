@@ -90,7 +90,10 @@ app.use("/api", (req, res, next) => {
   Logger.info(
     `[${timestamp}] Request from IP: ${req.ip}, Route: ${req.originalUrl}`
   );
-  routes(req, res, next);
+  // routes(req, res, next);
+  return res.status(503).json({
+    message: "Server under maintenance",
+  });
 });
 
 // send back a 404 error for any unknown api request
