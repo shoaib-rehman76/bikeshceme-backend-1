@@ -82,19 +82,16 @@ if (config.env === "production") {
   app.use("/v1/auth", authLimiter);
 }
 
-// v1 api routes
-// app.use("/api", routes);
 app.use("/api", (req, res, next) => {
-  // Log client's IP address
   const timestamp = new Date().toISOString();
   Logger.info(
     `[${timestamp}] Request from IP: ${req.ip}, Route: ${req.originalUrl}`
   );
-  // routes(req, res, next);
-  return res.status(503).json({
-    message: "Server under maintenance",
-  });
+  next(); // IMPORTANT
 });
+
+app.use("/api", routes);
+
 
 // send back a 404 error for any unknown api request
 app.use("*", (req, res, next) => {
